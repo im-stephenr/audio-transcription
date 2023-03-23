@@ -5,6 +5,6 @@
     "DB_NAME": "",
     "JWT_KEY": "secret_jwt_key",
     "SERVER_PORT": "3000",
-    "OPEN_AI_KEY": "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"
+    "OPEN_AI_KEY": "xxx"
   }
 }
