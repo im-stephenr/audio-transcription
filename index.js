@@ -35,48 +35,6 @@ app.use("/api/upload", uploadRoutes);
 
 app.get("/", (req, res, next) => {
   res.send("HELLO WORLD!");
-  // Create an S3 client for IDrive Cloud
-  const endpoint = new AWS.Endpoint("s5d8.ldn.idrivee2-36.com");
-  AWS.config.update({ region: "eu-west-2" });
-  const s3 = new AWS.S3({
-    endpoint: endpoint,
-    accessKeyId: "ju49ylDrQjPNil2eYIEe",
-    secretAccessKey: "iyUXwxZJmAogUCh1sBvqBqhgw8Xv2acr4lfG7nCz",
-  });
-
-  // list of objects in bucket 'my-bucket' params
-  var params = {
-    Bucket: "audio-files",
-  };
-
-  // list object call
-  s3.listObjects(params, async function (err, data) {
-    if (err) {
-      console.log("Error:", err);
-    } else {
-      const audioFileName = data.Contents[0].Key;
-      const model = "whisper-1";
-      const formData = new FormData();
-      formData.append("model", model);
-      formData.append("file", audioFileName);
-
-      try {
-        const response = await axios.post(
-          "https://api.openai.com/v1/audio/transcriptions",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.OPEN_AI_KEY}`,
-              "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-            },
-          }
-        );
-        console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  });
 });
 
 // Redirect error if url does not exist
